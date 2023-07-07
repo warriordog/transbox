@@ -40,7 +40,7 @@ const AuthLayout = () => {
           <header className='relative mb-auto flex justify-between px-2 py-12'>
             <div className='relative z-0 flex-1 px-2 lg:absolute lg:inset-0 lg:flex lg:items-center lg:justify-center'>
               <Link to='/' className='cursor-pointer'>
-                <SiteLogo alt={instance.title} className='h-7' />
+                <SiteLogo alt={instance.title} className='h-8' />
               </Link>
             </div>
 
