@@ -18,6 +18,7 @@ jobs:
           uses: mskelton/setup-yarn@v1.4.0
           with:
             flags: --ignore-scripts
+            node-version: "20.4"
         - name: Build
           run: |
               yarn build
