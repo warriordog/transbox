@@ -1,0 +1,52 @@
+name: Test & Build
+on:
+  workflow_dispatch:
+
+jobs:
+  setup-deps:
+      runs-on: ubuntu-latest
+      steps:
+          - name: Checkout
+            uses: actions/checkout@v3.5.3
+          - name: Setup Node.js
+            uses: mskelton/setup-yarn@v1.4.0
+          - name: Get Deps
+            run: yarn install --ignore-scripts
+          - name: Cache
+            uses: actions/cache@v1.2.1
+            with:
+                # A directory to store and save the cache
+                path: node_modules/
+                # An explicit key for restoring and saving the cache
+                key: yarn.lock
+                
+  build-production:
+    needs: setup-deps
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v3.5.3
+        - name: Cache
+          uses: actions/cache@v1.2.1
+          with:
+              path: node_modules/
+              # An explicit key for restoring and saving the cache
+              key: yarn.lock
+        - name: Setup Node.js
+          uses: mskelton/setup-yarn@v1.4.0
+        - name: Build
+          run: |
+              yarn build
+              yarn manage:translations en
+              git diff -quiet
+        - name: Upload a Build Artifact
+          uses: actions/upload-artifact@v3.1.2
+          with:
+            # Artifact name
+            name: soapbox-fe
+            # A file, directory or wildcard pattern that describes what to upload
+            path: static
+            retention-days: 5
+          
