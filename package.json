@@ -6,7 +6,7 @@
   "homepage": "https://soapbox.pub/",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/soapbox-pub/soapbox"
+    "url": "https://github.com/transfem-org/soapbox"
   },
   "keywords": [
     "fediverse",
