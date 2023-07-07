@@ -48,7 +48,7 @@ const SitePreview: React.FC<ISitePreview> = ({ soapbox }) => {
         'bg-gray-800': dark,
       })}
       >
-        <SiteLogo alt='Logo' className='h-5 w-auto self-center px-2 lg:h-6' theme={dark ? 'dark' : 'light'} />
+        <SiteLogo alt='Logo' className='h-8 w-auto self-center px-2 lg:h-6' theme={dark ? 'dark' : 'light'} />
       </div>
     </div>
   );
