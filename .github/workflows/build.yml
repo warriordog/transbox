@@ -10,6 +10,10 @@ jobs:
     steps:
         - name: Checkout
           uses: actions/checkout@v3.5.3
+          with:
+            fetch-depth: 0
+        - name: Get tags
+          run: git fetch --tags origin
         - name: Setup Yarn & Install Deps
           uses: mskelton/setup-yarn@v1.4.0
           with:
