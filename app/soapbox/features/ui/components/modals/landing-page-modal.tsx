@@ -27,7 +27,7 @@ const LandingPageModal: React.FC<ILandingPageModal> = ({ onClose }) => {
 
   return (
     <Modal
-      title={<SiteLogo alt='Logo' className='h-6 w-auto cursor-pointer' />}
+      title={<SiteLogo alt='Logo' className='h-8 w-auto cursor-pointer' />}
       onClose={() => onClose('LANDING_PAGE')}
     >
       <div className='mt-4 divide-y divide-solid divide-gray-200 dark:divide-gray-800'>
