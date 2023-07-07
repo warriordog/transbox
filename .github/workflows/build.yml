@@ -14,11 +14,12 @@ jobs:
             fetch-depth: 0
         - name: Get tags
           run: git fetch --tags origin
-        - name: Setup Yarn & Install Deps
-          uses: mskelton/setup-yarn@v1.4.0
+        - name: Setup Node
+          uses: actions/setup-node@v3
           with:
-            flags: --ignore-scripts
-            node-version: "20.4"
+              node-version: "20"
+        - name: Install Deps
+          run: yarn install --ignore-scripts
         - name: Build
           run: |
               yarn build
