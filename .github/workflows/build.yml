@@ -2,38 +2,14 @@ name: Test & Build
 on:
   workflow_dispatch:
 
-jobs:
-  setup-deps:
-      runs-on: ubuntu-latest
-      steps:
-          - name: Checkout
-            uses: actions/checkout@v3.5.3
-          - name: Setup Yarn & Install Deps
-            uses: mskelton/setup-yarn@v1.4.0
-            with:
-              flags: --ignore-scripts
-          - name: Cache
-            uses: actions/cache@v1.2.1
-            with:
-                # A directory to store and save the cache
-                path: node_modules/
-                # An explicit key for restoring and saving the cache
-                key: yarn.lock
-                
+jobs:         
   build-production:
-    needs: setup-deps
     runs-on: ubuntu-latest
     env:
       NODE_ENV: production
     steps:
         - name: Checkout
           uses: actions/checkout@v3.5.3
-        - name: Cache
-          uses: actions/cache@v1.2.1
-          with:
-              path: node_modules/
-              # An explicit key for restoring and saving the cache
-              key: yarn.lock
         - name: Setup Yarn & Install Deps
           uses: mskelton/setup-yarn@v1.4.0
           with:
