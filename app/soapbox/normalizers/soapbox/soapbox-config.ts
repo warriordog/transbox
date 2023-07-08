@@ -58,6 +58,15 @@ export const PromoPanelRecord = ImmutableRecord({
   items: ImmutableList<PromoPanelItem>(),
 });
 
+export const RulesPanelItemRecord = ImmutableRecord({
+  text: '',
+  textLocales: ImmutableMap<string, string>(),
+});
+
+export const RulesPanelRecord = ImmutableRecord({
+  items: ImmutableList<RulesPanelItem>(),
+});
+
 export const FooterItemRecord = ImmutableRecord({
   title: '',
   url: '',
@@ -87,6 +96,7 @@ export const SoapboxConfigRecord = ImmutableRecord({
   gdprUrl: '',
   greentext: false,
   promoPanel: PromoPanelRecord(),
+  rulesPanel: RulesPanelRecord(),
   navlinks: ImmutableMap({
     homeFooter: ImmutableList<FooterItem>(),
   }),
@@ -182,6 +192,12 @@ const normalizePromoPanel = (soapboxConfig: SoapboxConfigMap): SoapboxConfigMap 
   return soapboxConfig.set('promoPanel', promoPanel.set('items', items));
 };
 
+const normalizeRulesPanel = (soapboxConfig: SoapboxConfigMap): SoapboxConfigMap => {
+  const rulesPanel = RulesPanelRecord(soapboxConfig.get('rulesPanel'));
+  const items = rulesPanel.items.map(RulesPanelItemRecord);
+  return soapboxConfig.set('rulesPanel', rulesPanel.set('items', items));
+};
+
 const normalizeFooterLinks = (soapboxConfig: SoapboxConfigMap): SoapboxConfigMap => {
   const path = ['navlinks', 'homeFooter'];
   const items = (soapboxConfig.getIn(path, ImmutableList()) as ImmutableList<any>).map(FooterItemRecord);
@@ -247,6 +263,7 @@ export const normalizeSoapboxConfig = (soapboxConfig: Record<string, any>) => {
       normalizeAccentColor(soapboxConfig);
       normalizeColors(soapboxConfig);
       normalizePromoPanel(soapboxConfig);
+      normalizeRulesPanel(soapboxConfig);
       normalizeFooterLinks(soapboxConfig);
       maybeAddMissingColors(soapboxConfig);
       normalizeCryptoAddresses(soapboxConfig);
