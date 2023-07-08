@@ -15,6 +15,7 @@ import { generateAccent } from 'soapbox/utils/theme';
 import type {
   Ad,
   PromoPanelItem,
+  RulesPanelItem,
   FooterItem,
   CryptoAddress,
 } from 'soapbox/types/soapbox';
