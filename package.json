@@ -1,9 +1,9 @@
 {
   "name": "soapbox",
   "displayName": "Soapbox",
-  "version": "3.2.1",
+  "version": "3.2.2-TransFem",
   "description": "Soapbox frontend for the Fediverse.",
-  "homepage": "https://soapbox.pub/",
+  "homepage": "https://transfem.org/",
   "repository": {
     "type": "git",
     "url": "https://github.com/transfem-org/soapbox"
@@ -13,7 +13,7 @@
     "pleroma"
   ],
   "bugs": {
-    "url": "https://gitlab.com/soapbox-pub/soapbox/-/issues"
+    "url": "https://github.com/transfem-org/soapbox/issues"
   },
   "scripts": {
     "start": "npx webpack-dev-server",
