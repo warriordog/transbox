@@ -231,7 +231,8 @@ export const buildCustomEmojis = (customEmojis: any) => {
           keywords: [name],
           skins: [{ src: url }],
       });
-    }
+    };
+  });
 
   return emojis;
 };
