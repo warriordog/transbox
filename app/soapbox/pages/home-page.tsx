@@ -16,6 +16,7 @@ import {
   BirthdayPanel,
   CtaBanner,
   AnnouncementsPanel,
+  RulesPanel,
 } from 'soapbox/features/ui/util/async-components';
 import { useAppSelector, useOwnAccount, useFeatures, useSoapboxConfig, useDraggedFiles, useAppDispatch } from 'soapbox/hooks';
 
@@ -118,6 +119,9 @@ const HomePage: React.FC<IHomePage> = ({ children }) => {
             {Component => <Component limit={cryptoLimit} />}
           </BundleContainer>
         )}
+        <BundleContainer fetchComponent={RulesPanel}>
+          {Component => <Component />}
+        </BundleContainer>
         <BundleContainer fetchComponent={PromoPanel}>
           {Component => <Component />}
         </BundleContainer>
