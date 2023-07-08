@@ -1,5 +1,6 @@
 import {
   PromoPanelItemRecord,
+  RulesPanelItemRecord,
   FooterItemRecord,
   CryptoAddressRecord,
   SoapboxConfigRecord,
@@ -8,6 +9,7 @@ import {
 type Me = string | null | false | undefined;
 
 type PromoPanelItem = ReturnType<typeof PromoPanelItemRecord>;
+type RulesPanelItem = ReturnType<typeof RulesPanelItemRecord>;
 type FooterItem = ReturnType<typeof FooterItemRecord>;
 type CryptoAddress = ReturnType<typeof CryptoAddressRecord>;
 type SoapboxConfig = ReturnType<typeof SoapboxConfigRecord>;
@@ -15,6 +17,7 @@ type SoapboxConfig = ReturnType<typeof SoapboxConfigRecord>;
 export {
   Me,
   PromoPanelItem,
+  RulesPanelItem,
   FooterItem,
   CryptoAddress,
   SoapboxConfig,
