@@ -1,7 +1,7 @@
 {
   "name": "soapbox",
   "displayName": "Soapbox",
-  "version": "3.3.0-TransFem",
+  "version": "3.3.1-TransFem",
   "description": "Soapbox frontend for the Fediverse.",
   "homepage": "https://transfem.org/",
   "repository": {
