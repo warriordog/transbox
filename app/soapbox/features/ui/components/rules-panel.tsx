@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ForkAwesomeIcon from 'soapbox/components/fork-awesome-icon';
-import { Widget, Stack, Text } from 'soapbox/components/ui';
+import { Card, Widget, Stack, Text } from 'soapbox/components/ui';
 import { useInstance, useSettings, useSoapboxConfig } from 'soapbox/hooks';
 
 const RulesPanel: React.FC = () => {
