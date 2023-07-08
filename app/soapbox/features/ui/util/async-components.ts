@@ -326,6 +326,10 @@ export function PromoPanel() {
   return import(/* webpackChunkName: "features/ui" */'../components/promo-panel');
 }
 
+export function RulesPanel() {
+  return import(/* webpackChunkName: "features/ui" */'../components/rules-panel');
+}
+
 export function SignUpPanel() {
   return import(/* webpackChunkName: "features/ui" */'../components/panels/sign-up-panel');
 }
