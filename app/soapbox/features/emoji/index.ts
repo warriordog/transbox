@@ -25,6 +25,11 @@ export interface CustomEmoji {
   imageUrl: string
 }
 
+export interface EmojiCategory {
+  id: string
+  emojis: string[]
+}
+
 export interface NativeEmoji {
   id: string
   colons: string
@@ -210,19 +215,28 @@ export default emojify;
 
 export const buildCustomEmojis = (customEmojis: any) => {
   const emojis: EmojiMart<EmojiMartCustom>[] = [];
-
   customEmojis.forEach((emoji: any) => {
     const shortcode = emoji.get('shortcode');
     const url       = emoji.get('static_url');
     const name      = shortcode.replace(':', '');
+    const category  = emoji.get('category');
+    const lcategory = emojis.find(fcategory => fcategory.id == category);
 
-    emojis.push({
-      id: name,
-      name,
-      keywords: [name],
-      skins: [{ src: url }],
-    });
-  });
+    if(!lcategory) {
+  	  emojis.push({"id": emoji.category, "name": emoji.category, emojis:[{
+        id: name,
+        name,
+        keywords: [name],
+        skins: [{ src: url }],
+      }]})
+    } else if(lcategory) {
+    	lcategory.emojis.push({
+          id: name,
+          name,
+          keywords: [name],
+          skins: [{ src: url }],
+      });
+    }
 
   return emojis;
 };
