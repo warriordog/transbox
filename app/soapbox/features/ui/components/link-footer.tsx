@@ -73,7 +73,7 @@ const LinkFooter: React.FC = (): JSX.Element => {
         ) : (
           <FormattedMessage
             id='getting_started.open_source_notice'
-            defaultMessage='{code_name} is open source software. You can contribute or report issues at {code_link} (v{code_version}).'
+            defaultMessage='TransFem is a safe space for transfem individuals and allies. We utilize open-source software, and you can find the source code at {code_link} (v{code_version}).'
             values={{
               code_name: sourceCode.displayName,
               code_link: <Text theme='subtle' tag='span'><a className='underline' href={sourceCode.url} rel='noopener' target='_blank'>{sourceCode.repository}</a></Text>,
