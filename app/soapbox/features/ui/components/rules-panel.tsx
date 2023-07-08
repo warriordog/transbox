@@ -1,6 +1,5 @@
 import React from 'react';
 
-import ForkAwesomeIcon from 'soapbox/components/fork-awesome-icon';
 import { Card, Widget, Stack, Text } from 'soapbox/components/ui';
 import { useInstance, useSettings, useSoapboxConfig } from 'soapbox/hooks';
 
@@ -20,10 +19,8 @@ const RulesPanel: React.FC = () => {
           <Stack space={2}>
             {rulesItems.map((item, i) => (
               <Text key={i}>
-                <a className='flex items-center' href={item.url} target='_blank'>
-                  <ForkAwesomeIcon id={`fa-solid fa-${i}`} className='mr-2 flex-none text-lg rtl:ml-2 rtl:mr-0' fixedWidth />
+                  {i}.
                   {item.textLocales.get(locale) || item.text}
-                </a>
               </Text>
             ))}
           </Stack>
