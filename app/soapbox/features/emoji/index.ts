@@ -25,11 +25,6 @@ export interface CustomEmoji {
   imageUrl: string
 }
 
-export interface EmojiCategory {
-  id: string
-  emojis: string[]
-}
-
 export interface NativeEmoji {
   id: string
   colons: string
