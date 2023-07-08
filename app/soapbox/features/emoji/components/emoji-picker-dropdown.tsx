@@ -235,7 +235,7 @@ const EmojiPickerDropdown: React.FC<IEmojiPickerDropdown> = ({
       <RenderAfter update={update}>
         {!loading && (
           <EmojiPicker
-            custom={withCustom ? [{ emojis: buildCustomEmojis(customEmojis) }] : undefined}
+            custom={withCustom ? [{ buildCustomEmojis(customEmojis) }] : undefined}
             title={title}
             onEmojiSelect={handlePick}
             recent={frequentlyUsedEmojis}
