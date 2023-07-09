@@ -41,9 +41,9 @@ const Dashboard: React.FC = () => {
     e.preventDefault();
   };
 
-  const navigateToSoapboxConfig = () => history.push('/soapbox/config');
-  const navigateToModerationLog = () => history.push('/soapbox/admin/log');
-  const navigateToAnnouncements = () => history.push('/soapbox/admin/announcements');
+  const navigateToSoapboxConfig = () => history.push('/transbox/config');
+  const navigateToModerationLog = () => history.push('/transbox/admin/log');
+  const navigateToAnnouncements = () => history.push('/transbox/admin/announcements');
 
   const v = parseVersion(instance.version);
 
@@ -64,7 +64,7 @@ const Dashboard: React.FC = () => {
           label={<FormattedMessage id='admin.dashcounters.mau_label' defaultMessage='monthly active users' />}
         />
         <DashCounter
-          to='/soapbox/admin/users'
+          to='/transbox/admin/users'
           count={userCount}
           label={<FormattedMessage id='admin.dashcounters.user_count_label' defaultMessage='total users' />}
         />
@@ -88,7 +88,7 @@ const Dashboard: React.FC = () => {
         {account.admin && (
           <ListItem
             onClick={navigateToSoapboxConfig}
-            label={<FormattedMessage id='navigation_bar.soapbox_config' defaultMessage='Soapbox config' />}
+            label={<FormattedMessage id='navigation_bar.soapbox_config' defaultMessage='Transbox config' />}
           />
         )}
 

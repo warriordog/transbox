@@ -85,7 +85,7 @@ const ThumbNavigation: React.FC = (): JSX.Element => {
         <ThumbNavigationLink
           src={require('@tabler/icons/dashboard.svg')}
           text={<FormattedMessage id='navigation.dashboard' defaultMessage='Dashboard' />}
-          to='/soapbox/admin'
+          to='/transbox/admin'
           count={dashboardCount}
         />
       )}

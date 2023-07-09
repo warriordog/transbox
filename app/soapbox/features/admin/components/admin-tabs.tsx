@@ -19,18 +19,18 @@ const AdminTabs: React.FC = () => {
   const reportsCount = useAppSelector(state => state.admin.openReports.count());
 
   const tabs = [{
-    name: '/soapbox/admin',
+    name: '/transbox/admin',
     text: intl.formatMessage(messages.dashboard),
-    to: '/soapbox/admin',
+    to: '/transbox/admin',
   }, {
-    name: '/soapbox/admin/reports',
+    name: '/transbox/admin/reports',
     text: intl.formatMessage(messages.reports),
-    to: '/soapbox/admin/reports',
+    to: '/transbox/admin/reports',
     count: reportsCount,
   }, {
-    name: '/soapbox/admin/approval',
+    name: '/transbox/admin/approval',
     text: intl.formatMessage(messages.waitlist),
-    to: '/soapbox/admin/approval',
+    to: '/transbox/admin/approval',
     count: approvalCount,
   }];
 

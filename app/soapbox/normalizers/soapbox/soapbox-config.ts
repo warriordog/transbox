@@ -251,7 +251,7 @@ const normalizeRedirectRootNoLogin = (soapboxConfig: SoapboxConfigMap): SoapboxC
       return soapboxConfig.delete('redirectRootNoLogin');
     }
   } catch (e) {
-    console.error('You have configured an invalid redirect in Soapbox Config.');
+    console.error('You have configured an invalid redirect in Transbox Config.');
     console.error(e);
     return soapboxConfig.delete('redirectRootNoLogin');
   }

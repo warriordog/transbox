@@ -157,7 +157,7 @@ const SidebarNavigation = () => {
 
             {account.staff && (
               <SidebarNavigationLink
-                to='/soapbox/admin'
+                to='/transbox/admin'
                 icon={require('@tabler/icons/dashboard.svg')}
                 count={dashboardCount}
                 text={<FormattedMessage id='tabs_bar.dashboard' defaultMessage='Dashboard' />}

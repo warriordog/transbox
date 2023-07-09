@@ -29,7 +29,7 @@ const messages = defineMessages({
   mutes: { id: 'navigation_bar.mutes', defaultMessage: 'Muted users' },
   filters: { id: 'navigation_bar.filters', defaultMessage: 'Muted words' },
   followedTags: { id: 'navigation_bar.followed_tags', defaultMessage: 'Followed hashtags' },
-  soapboxConfig: { id: 'navigation_bar.soapbox_config', defaultMessage: 'Soapbox config' },
+  soapboxConfig: { id: 'navigation_bar.soapbox_config', defaultMessage: 'Transbox config' },
   accountMigration: { id: 'navigation_bar.account_migration', defaultMessage: 'Move account' },
   accountAliases: { id: 'navigation_bar.account_aliases', defaultMessage: 'Account aliases' },
   logout: { id: 'navigation_bar.logout', defaultMessage: 'Logout' },
@@ -317,7 +317,7 @@ const SidebarMenu: React.FC = (): JSX.Element | null => {
 
                   {account.admin && (
                     <SidebarLink
-                      to='/soapbox/config'
+                      to='/transbox/config'
                       icon={require('@tabler/icons/settings.svg')}
                       text={intl.formatMessage(messages.soapboxConfig)}
                       onClick={onClose}

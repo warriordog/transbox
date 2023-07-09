@@ -33,8 +33,8 @@ import RulesPanelInput from './components/rules-panel-input';
 import SitePreview from './components/site-preview';
 
 const messages = defineMessages({
-  heading: { id: 'column.soapbox_config', defaultMessage: 'Soapbox config' },
-  saved: { id: 'soapbox_config.saved', defaultMessage: 'Soapbox config saved!' },
+  heading: { id: 'column.soapbox_config', defaultMessage: 'Transbox config' },
+  saved: { id: 'soapbox_config.saved', defaultMessage: 'Transbox config saved!' },
   copyrightFooterLabel: { id: 'soapbox_config.copyright_footer.meta_fields.label_placeholder', defaultMessage: 'Copyright footer' },
   cryptoDonatePanelLimitLabel: { id: 'soapbox_config.crypto_donate_panel_limit.meta_fields.limit_placeholder', defaultMessage: 'Number of items to display in the crypto homepage widget' },
   customCssLabel: { id: 'soapbox_config.custom_css.meta_fields.url_placeholder', defaultMessage: 'URL' },
@@ -85,7 +85,7 @@ const SoapboxConfig: React.FC = () => {
   const [rawJSON, setRawJSON] = useState<string>(JSON.stringify(initialData, null, 2));
   const [jsonValid, setJsonValid] = useState(true);
 
-  const navigateToThemeEditor = () => history.push('/soapbox/admin/theme');
+  const navigateToThemeEditor = () => history.push('/transbox/admin/theme');
 
   const soapbox = useMemo(() => {
     return normalizeSoapboxConfig(data);

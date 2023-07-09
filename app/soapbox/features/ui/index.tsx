@@ -216,7 +216,7 @@ const SwitchingColumnsArea: React.FC<ISwitchingColumnsArea> = ({ children }) => 
       <Redirect from='/home' to='/' />
 
       {/* Mastodon rendered pages */}
-      <Redirect from='/admin' to='/soapbox/admin' />
+      <Redirect from='/admin' to='/transbox/admin' />
       <Redirect from='/terms' to='/about' />
       <Redirect from='/settings/preferences' to='/settings' />
       <Redirect from='/settings/two_factor_authentication_methods' to='/settings/mfa' />
@@ -326,15 +326,15 @@ const SwitchingColumnsArea: React.FC<ISwitchingColumnsArea> = ({ children }) => 
       <WrappedRoute path='/settings/mfa' page={DefaultPage} component={MfaForm} exact />
       <WrappedRoute path='/settings/tokens' page={DefaultPage} component={AuthTokenList} content={children} />
       <WrappedRoute path='/settings' page={DefaultPage} component={Settings} content={children} />
-      <WrappedRoute path='/soapbox/config' adminOnly page={DefaultPage} component={SoapboxConfig} content={children} />
+      <WrappedRoute path='/transbox/config' adminOnly page={DefaultPage} component={SoapboxConfig} content={children} />
 
-      <WrappedRoute path='/soapbox/admin' staffOnly page={AdminPage} component={Dashboard} content={children} exact />
-      <WrappedRoute path='/soapbox/admin/approval' staffOnly page={AdminPage} component={Dashboard} content={children} exact />
-      <WrappedRoute path='/soapbox/admin/reports' staffOnly page={AdminPage} component={Dashboard} content={children} exact />
-      <WrappedRoute path='/soapbox/admin/log' staffOnly page={AdminPage} component={ModerationLog} content={children} exact />
-      <WrappedRoute path='/soapbox/admin/users' staffOnly page={AdminPage} component={UserIndex} content={children} exact />
-      <WrappedRoute path='/soapbox/admin/theme' staffOnly page={AdminPage} component={ThemeEditor} content={children} exact />
-      <WrappedRoute path='/soapbox/admin/announcements' staffOnly page={AdminPage} component={Announcements} content={children} exact />
+      <WrappedRoute path='/transbox/admin' staffOnly page={AdminPage} component={Dashboard} content={children} exact />
+      <WrappedRoute path='/transbox/admin/approval' staffOnly page={AdminPage} component={Dashboard} content={children} exact />
+      <WrappedRoute path='/transbox/admin/reports' staffOnly page={AdminPage} component={Dashboard} content={children} exact />
+      <WrappedRoute path='/transbox/admin/log' staffOnly page={AdminPage} component={ModerationLog} content={children} exact />
+      <WrappedRoute path='/transbox/admin/users' staffOnly page={AdminPage} component={UserIndex} content={children} exact />
+      <WrappedRoute path='/transbox/admin/theme' staffOnly page={AdminPage} component={ThemeEditor} content={children} exact />
+      <WrappedRoute path='/transbox/admin/announcements' staffOnly page={AdminPage} component={Announcements} content={children} exact />
       <WrappedRoute path='/info' page={EmptyPage} component={ServerInfo} content={children} />
 
       <WrappedRoute path='/developers/apps/create' developerOnly page={DefaultPage} component={CreateApp} content={children} />
