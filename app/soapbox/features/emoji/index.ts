@@ -209,7 +209,7 @@ const emojify = (str: string, customEmojis = {}) => {
 export default emojify;
 
 export const buildCustomEmojis = (customEmojis: any) => {
-  const emojis: EmojiMart<EmojiMartCustom>[] = [];
+  const emojis: any = [];
   customEmojis.forEach((emoji: any) => {
     const shortcode = emoji.get('shortcode');
     const url       = emoji.get('static_url');
