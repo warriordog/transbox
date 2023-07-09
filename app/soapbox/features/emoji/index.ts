@@ -2,7 +2,7 @@ import split from 'graphemesplit';
 
 import unicodeMapping from './mapping';
 
-import type { Emoji as EmojiMart, CustomEmoji as EmojiMartCustom } from 'soapbox/features/emoji/data';
+import type { Emoji as EmojiMart, CustomEmoji as EmojiMartCustom, CustomEmojiCategory as EmojiCategory } from 'soapbox/features/emoji/data';
 
 /*
  * TODO: Consolate emoji object types
@@ -209,16 +209,16 @@ const emojify = (str: string, customEmojis = {}) => {
 export default emojify;
 
 export const buildCustomEmojis = (customEmojis: any) => {
-  const emojis: any = [];
+  const emojis: EmojiCategory<EmojiMart<EmojiMartCustom>>[] = [];
   customEmojis.forEach((emoji: any) => {
     const shortcode = emoji.get('shortcode');
     const url       = emoji.get('static_url');
     const name      = shortcode.replace(':', '');
     const category  = emoji.get('category');
-    const lcategory = emojis.find((fcategory: any) => fcategory.id == category);
+    const lcategory = emojis.find(fcategory => fcategory.id == category);
 
     if(!lcategory) {
-  	  emojis.push({"id": emoji.category, "name": emoji.category, emojis:[{
+  	  emojis.push({"id": category, "name": category, emojis:[{
         id: name,
         name,
         keywords: [name],

@@ -229,7 +229,6 @@ const EmojiPickerDropdown: React.FC<IEmojiPickerDropdown> = ({
   useEffect(() => () => {
     document.body.style.overflow = '';
   }, []);
-
   return (
     visible ? (
       <RenderAfter update={update}>

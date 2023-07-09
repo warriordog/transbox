@@ -11,6 +11,12 @@ export interface CustomEmoji {
   src: string
 }
 
+export interface CustomEmojiCategory<T> {
+  id: string
+  name: string
+  emojis: T[]
+}
+
 export interface Emoji<T> {
   id: string
   name: string
