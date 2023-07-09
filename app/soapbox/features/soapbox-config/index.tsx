@@ -298,16 +298,6 @@ const SoapboxConfig: React.FC = () => {
           </CardHeader>
 
           <Streamfield
-            label='Rules'
-            hint='You can customize the rules panel that is displayed on the right side of the timelines page.'
-            component={RulesPanelInput}
-            values={soapbox.rulesPanel.items.toArray()}
-            onChange={handleStreamItemChange(['rulesPanel', 'items'])}
-            onAddItem={addStreamItem(['rulesPanel', 'items'], templates.promoPanel)}
-            onRemoveItem={deleteStreamItem(['rulesPanel', 'items'])}
-          />
-
-          <Streamfield
             label={<FormattedMessage id='soapbox_config.fields.promo_panel_fields_label' defaultMessage='Promo panel items' />}
             hint={<FormattedMessage id='soapbox_config.hints.promo_panel_fields' defaultMessage='You can have custom defined links displayed on the right panel of the timelines page.' />}
             component={PromoPanelInput}
@@ -335,6 +325,20 @@ const SoapboxConfig: React.FC = () => {
               onChange={handleChange(['copyright'], (e) => e.target.value)}
             />
           </FormGroup>
+
+          <CardHeader>
+            <CardTitle title='Transbox Options' />
+          </CardHeader>
+
+          <Streamfield
+            label='Rules'
+            hint='You can customize the rules panel that is displayed on the right side of the timelines page.'
+            component={RulesPanelInput}
+            values={soapbox.rulesPanel.items.toArray()}
+            onChange={handleStreamItemChange(['rulesPanel', 'items'])}
+            onAddItem={addStreamItem(['rulesPanel', 'items'], templates.promoPanel)}
+            onRemoveItem={deleteStreamItem(['rulesPanel', 'items'])}
+          />
 
           {features.events && (
             <>
