@@ -16,7 +16,7 @@ import {
 import AutosuggestInput, { AutoSuggestion } from 'soapbox/components/autosuggest-input';
 import AutosuggestTextarea from 'soapbox/components/autosuggest-textarea';
 import { Button, HStack, Stack } from 'soapbox/components/ui';
-import EmojiPickerDropdown from 'soapbox/features/emoji/containers/emoji-picker-dropdown-container';
+import EmojiPickerDropdown from 'soapbox/features/emoji/containers/emoji-picker-dropdown-container-flip';
 import { useAppDispatch, useAppSelector, useCompose, useDraggedFiles, useFeatures, useInstance, usePrevious } from 'soapbox/hooks';
 import { isMobile } from 'soapbox/is-mobile';
 
