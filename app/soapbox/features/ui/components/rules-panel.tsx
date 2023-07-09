@@ -19,7 +19,7 @@ const RulesPanel: React.FC = () => {
           <Stack space={2}>
             {rulesItems.map((item, i) => (
               <Text key={i}>
-                  {i+1}.&nbsp;&nbsp;
+                  {i+1}.&nbsp;
                   {item.textLocales.get(locale) || item.text}
               </Text>
             ))}

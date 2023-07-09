@@ -29,6 +29,7 @@ import toast from 'soapbox/toast';
 import CryptoAddressInput from './components/crypto-address-input';
 import FooterLinkInput from './components/footer-link-input';
 import PromoPanelInput from './components/promo-panel-input';
+import RulesPanelInput from './components/rules-panel-input';
 import SitePreview from './components/site-preview';
 
 const messages = defineMessages({
@@ -64,6 +65,7 @@ type ThemeChangeHandler = (theme: string) => void;
 
 const templates: Record<string, Template> = {
   promoPanelItem: ImmutableMap({ icon: '', text: '', url: '' }),
+  rulesPanelItem: ImmutableMap({ text: '' }),
   footerItem: ImmutableMap({ title: '', url: '' }),
   cryptoAddress: ImmutableMap({ ticker: '', address: '', note: '' }),
 };
@@ -294,6 +296,16 @@ const SoapboxConfig: React.FC = () => {
           <CardHeader>
             <CardTitle title={<FormattedMessage id='soapbox_config.headings.navigation' defaultMessage='Navigation' />} />
           </CardHeader>
+
+          <Streamfield
+            label='Rules'
+            hint='You can customize the rules panel that is displayed on the right side of the timelines page.'
+            component={RulesPanelInput}
+            values={soapbox.rulesPanel.items.toArray()}
+            onChange={handleStreamItemChange(['rulesPanel', 'items'])}
+            onAddItem={addStreamItem(['rulesPanel', 'items'], templates.promoPanel)}
+            onRemoveItem={deleteStreamItem(['rulesPanel', 'items'])}
+          />
 
           <Streamfield
             label={<FormattedMessage id='soapbox_config.fields.promo_panel_fields_label' defaultMessage='Promo panel items' />}
