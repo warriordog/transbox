@@ -21,6 +21,7 @@ export interface Emoji<T> {
 
 export interface EmojiCategory {
   id: string
+  name: string
   emojis: string[]
 }
 
