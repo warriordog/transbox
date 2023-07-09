@@ -59,7 +59,10 @@ const DropdownMenu = (props: IDropdownMenu) => {
     placement: initialPlacement,
     middleware: [
       offset(12),
-      flip(),
+      flip({
+        fallbackAxisSideDirection: 'start',
+        fallbackPlacements: ['top', 'bottom', 'right'],
+      }),
       shift({
         padding: 8,
       }),
