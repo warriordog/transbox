@@ -1,19 +1,19 @@
 {
-  "name": "soapbox",
-  "displayName": "Soapbox",
-  "version": "3.3.3-TransFem",
-  "description": "Soapbox frontend for the Fediverse.",
+  "name": "transbox",
+  "displayName": "Transbox",
+  "version": "3.3.3",
+  "description": "Soapbox Fork modified for transfem.org.",
   "homepage": "https://transfem.org/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/transfem-org/soapbox"
+    "url": "https://github.com/transfem-org/transbox"
   },
   "keywords": [
     "fediverse",
     "pleroma"
   ],
   "bugs": {
-    "url": "https://github.com/transfem-org/soapbox/issues"
+    "url": "https://github.com/transfem-org/transbox/issues"
   },
   "scripts": {
     "start": "npx webpack-dev-server",
