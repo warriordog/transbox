@@ -209,13 +209,13 @@ const emojify = (str: string, customEmojis = {}) => {
 export default emojify;
 
 export const buildCustomEmojis = (customEmojis: any) => {
-  const emojis: EmojiCategory[EmojiMart<EmojiMartCustom>[]] = [];
+  const emojis: any = [];
   customEmojis.forEach((emoji: any) => {
     const shortcode = emoji.get('shortcode');
     const url       = emoji.get('static_url');
     const name      = shortcode.replace(':', '');
     const category  = emoji.get('category');
-    const lcategory = emojis.find(fcategory => fcategory.id == category);
+    const lcategory = emojis.find((fcategory: any) => fcategory.id == category);
 
     if(!lcategory) {
   	  emojis.push({"id": emoji.category, "name": emoji.category, emojis:[{
