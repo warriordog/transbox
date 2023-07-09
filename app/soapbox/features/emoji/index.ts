@@ -218,7 +218,7 @@ export const buildCustomEmojis = (customEmojis: any) => {
     const lcategory = emojis.find(fcategory => fcategory.id == category);
 
     if(!lcategory) {
-  	  emojis.push({"id": category, "name": category, emojis:[{
+  	  emojis.push({"id": category, "name": category.replace('pack:', ''), emojis:[{
         id: name,
         name,
         keywords: [name],
