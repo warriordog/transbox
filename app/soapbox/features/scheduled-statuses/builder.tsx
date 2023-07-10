@@ -17,7 +17,7 @@ export const buildStatus = (state: RootState, scheduledStatus: ScheduledStatus) 
     created_at: scheduledStatus.scheduled_at,
     id: scheduledStatus.id,
     in_reply_to_id: scheduledStatus.in_reply_to_id,
-    media_attachments: [],
+    media_attachments: !scheduledStatus.media_attachments ? [] : scheduledStatus.media_attachments,
     poll: scheduledStatus.poll,
     sensitive: scheduledStatus.sensitive,
     uri: `/scheduled_statuses/${scheduledStatus.id}`,
