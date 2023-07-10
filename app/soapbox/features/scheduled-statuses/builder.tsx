@@ -9,7 +9,7 @@ import type { RootState } from 'soapbox/store';
 
 export const buildStatus = (state: RootState, scheduledStatus: ScheduledStatus) => {
   const me = state.me as string;
-  const account = state.entities[Entities.ACCOUNTS]?.store[me];
+  const account = state.accounts.get(state.me)!;
 
   const status = ImmutableMap({
     account,
