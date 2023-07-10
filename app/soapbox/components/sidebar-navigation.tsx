@@ -84,6 +84,25 @@ const SidebarNavigation = () => {
 
   /** Conditionally render the supported messages link */
   const renderMessagesLink = (): React.ReactNode => {
+    if (features.chats && features.conversations) {
+      return (
+        <>
+            <SidebarNavigationLink
+              to='/chats'
+              icon={require('@tabler/icons/messages.svg')}
+              count={unreadChatsCount}
+              countMax={9}
+              text={<FormattedMessage id='navigation.chats' defaultMessage='Chats' />}
+            />
+            <SidebarNavigationLink
+              to='/messages'
+              icon={require('@tabler/icons/mail.svg')}
+              text={<FormattedMessage id='navigation.direct_messages' defaultMessage='Messages' />}
+            />
+        </>
+      );
+    }
+
     if (features.chats) {
       return (
         <SidebarNavigationLink
