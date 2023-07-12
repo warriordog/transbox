@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
 
 import { usePatronUser } from 'soapbox/api/hooks';
@@ -11,6 +11,8 @@ import { useAppSelector, useSoapboxConfig } from 'soapbox/hooks';
 import { isLocal } from 'soapbox/utils/accounts';
 import { badgeToTag, getBadges as getAccountBadges } from 'soapbox/utils/badges';
 import { capitalize } from 'soapbox/utils/strings';
+import { getLData } from 'soapbox/utils/listenbrainz';
+import StillImage from 'soapbox/components/still-image';
 
 import ProfileFamiliarFollowers from './profile-familiar-followers';
 import ProfileField from './profile-field';
@@ -59,8 +61,56 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
     }
   };
 
+  const [ldata, setLData] = useState<string[] | null>(null);
+
+  useEffect(() => {
+    const fetchData = async (LBUser: string) => {
+      try {
+        const data = await getLData(LBUser);
+        setLData(data);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+        setLData(null);
+      }
+    };
+
+    if (account) {
+      const badges = getAccountBadges(account);
+      const LBBadge = badges.find(badge => badge.toLowerCase().startsWith('badge:lb_'));
+      const LBUser = LBBadge?.toLowerCase().replace('badge:lb_', '');
+      if (LBUser) {
+        fetchData(LBUser);
+      } else {
+        setLData(null);
+      }
+    } else {
+      setLData(null);
+    }
+
+  }, [account]);
+
+  const getLB = (): React.ReactNode => {
+    if (ldata && ldata.length > 0) {
+      const current = Math.floor(new Date().getTime() / 1000);
+      const timeonlb = ldata[3] as unknown as number;
+      if ((current-timeonlb) / 60 < 6) {
+        return (
+        <div style={{backgroundColor: '#422035'}}>
+          <HStack alignItems='center' space={0.5}>
+            <StillImage className='h-16 mr-3' src={ldata ? ldata[1] : 'https://transfem.space/plugins/listenbrainz/images/cover-art-placeholder.png'} />
+            <Stack alignItems='start' space={0.5}>
+              <Text weight='bold' size='sm'>Now Playing: {ldata ? ldata[0] : ldata}</Text>
+              <Text size='xs' weight='medium'>{ldata ? ldata[2] : ldata}</Text>
+            </Stack>
+          </HStack>
+        </div>);
+      };
+    };
+  };
+
   const getCustomBadges = (): React.ReactNode[] => {
-    const badges = account ? getAccountBadges(account) : [];
+    let badges = account ? getAccountBadges(account) : [];
+    badges = badges.filter(badge => !badge.toLowerCase().startsWith('badge:lb_'));
 
     return badges.map(badge => (
       <Badge
@@ -176,6 +226,8 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
         {account.note.length > 0 && (
           <Markup size='sm' dangerouslySetInnerHTML={content} />
         )}
+
+        {badges.length > 0 && getLB()}
 
         <div className='flex flex-col items-start gap-2 md:flex-row md:flex-wrap md:items-center'>
           {isLocal(account) ? (
