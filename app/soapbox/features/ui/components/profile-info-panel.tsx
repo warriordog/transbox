@@ -75,9 +75,7 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
     };
 
     if (account) {
-      const badges = getAccountBadges(account);
-      const LBBadge = badges.find(badge => badge.toLowerCase().startsWith('badge:lb_'));
-      const LBUser = LBBadge?.toLowerCase().replace('badge:lb_', '');
+      const LBUser = account.listenbrainz;
       if (LBUser) {
         fetchData(LBUser);
       } else {
@@ -110,7 +108,6 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
 
   const getCustomBadges = (): React.ReactNode[] => {
     let badges = account ? getAccountBadges(account) : [];
-    badges = badges.filter(badge => !badge.toLowerCase().startsWith('badge:lb_'));
 
     return badges.map(badge => (
       <Badge
