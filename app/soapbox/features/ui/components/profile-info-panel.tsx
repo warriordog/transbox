@@ -93,15 +93,21 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
       const timeonlb = ldata[3] as unknown as number;
       if ((current-timeonlb) / 60 < 6) {
         return (
-        <div style={{backgroundColor: '#422035'}}>
+        <a href={ldata ? ldata[4] : '#'}>
+        <div style={{backgroundColor: '#422035'}} className='relative'>
           <HStack alignItems='center' space={0.5}>
-            <StillImage className='h-16 mr-3' src={ldata ? ldata[1] : 'https://transfem.space/plugins/listenbrainz/images/cover-art-placeholder.png'} />
-            <Stack alignItems='start' space={0.5}>
+            <StillImage className='h-16' src={ldata ? ldata[1] : 'https://transfem.space/plugins/listenbrainz/images/cover-art-placeholder.png'} />
+            <Stack alignItems='start' className='absolute left-5' style={{paddingLeft:'3.2rem'}} space={0.5}>
               <Text weight='bold' size='sm'>Now Playing: {ldata ? ldata[0] : ldata}</Text>
               <Text size='xs' weight='medium'>{ldata ? ldata[2] : ldata}</Text>
             </Stack>
+            <a href={ldata ? ldata[5] : '#'}>
+            <Stack className='absolute right-3' style={{bottom: '1.01rem'}}>
+              <Icon size={32} src={require('@tabler/icons/player-play-filled.svg')}/>
+            </Stack>
+            </a>
           </HStack>
-        </div>);
+        </div></a>);
       };
     };
   };
