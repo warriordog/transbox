@@ -322,19 +322,6 @@ const EditProfile: React.FC = () => {
           </FormGroup>
         )}
 
-        {features.accountListenBrainz && (
-          <FormGroup
-            labelText='ListenBrainz'
-          >
-            <Input
-              type='text'
-              value={data.listenbrainz}
-              onChange={handleTextChange('listenbrainz')}
-              placeholder='Listenbrainz Username'
-            />
-          </FormGroup>
-        )}
-
         {features.accountLocation && (
           <FormGroup
             labelText={<FormattedMessage id='edit_profile.fields.location_label' defaultMessage='Location' />}
@@ -344,6 +331,19 @@ const EditProfile: React.FC = () => {
               value={data.location}
               onChange={handleTextChange('location')}
               placeholder={intl.formatMessage(messages.locationPlaceholder)}
+            />
+          </FormGroup>
+        )}
+
+        {features.accountListenBrainz && (
+          <FormGroup
+            labelText='ListenBrainz'
+          >
+            <Input
+              type='text'
+              value={data.listenbrainz}
+              onChange={handleTextChange('listenbrainz')}
+              placeholder='Listenbrainz Username'
             />
           </FormGroup>
         )}
