@@ -257,6 +257,8 @@ const ComposeForm = <ID extends string>({ id, shouldCondense, autoFocus, clickab
   } else if (privacy === 'private') {
     publishText = intl.formatMessage(messages.publish);
     publishIcon = require('@tabler/icons/lock.svg');
+  }  else if (privacy === 'local') {
+      publishText = 'Post Locally';
   } else {
     publishText = privacy !== 'unlisted' ? intl.formatMessage(messages.publishLoud, { publish: intl.formatMessage(messages.publish) }) : intl.formatMessage(messages.publish);
   }

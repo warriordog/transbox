@@ -206,7 +206,7 @@ const insertEmoji = (compose: Compose, position: number, emojiData: Emoji, needs
 };
 
 const privacyPreference = (a: string, b: string) => {
-  const order = ['public', 'unlisted', 'private', 'direct'];
+  const order = ['public', 'unlisted', 'local', 'private', 'direct'];
 
   if (a === 'group') return a;
 
