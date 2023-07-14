@@ -141,6 +141,14 @@ const getInstanceFeatures = (instance: Instance) => {
     ]),
 
     /**
+     * Ability to set one's listenbrainz on their profile.
+     * @see PATCH /api/v1/accounts/update_credentials
+     */
+    accountListenBrainz: any([
+      v.software === PLEROMA && v.build === REBASED && gte(v.version, '2.4.50')
+    ]),
+
+    /**
      * Look up an account by the acct.
      * @see GET /api/v1/accounts/lookup
      */
