@@ -162,6 +162,7 @@ const PrivacyDropdown: React.FC<IPrivacyDropdown> = ({
   const options = [
     { icon: require('@tabler/icons/world.svg'), value: 'public', text: intl.formatMessage(messages.public_short), meta: intl.formatMessage(messages.public_long) },
     { icon: require('@tabler/icons/lock-open.svg'), value: 'unlisted', text: intl.formatMessage(messages.unlisted_short), meta: intl.formatMessage(messages.unlisted_long) },
+    { icon: require('@tabler/icons/affiliate.svg'), value: 'local', text: 'Local', meta: 'Do not post to federated instances' },
     { icon: require('@tabler/icons/lock.svg'), value: 'private', text: intl.formatMessage(messages.private_short), meta: intl.formatMessage(messages.private_long) },
     { icon: require('@tabler/icons/mail.svg'), value: 'direct', text: intl.formatMessage(messages.direct_short), meta: intl.formatMessage(messages.direct_long) },
   ];
