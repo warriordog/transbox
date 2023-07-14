@@ -9,6 +9,8 @@ const getLData = (LBUser: string) => {
       const musicbrainzurl: string = data.data.payload.listens[0].track_metadata.mbid_mapping && data.data.payload.listens[0].track_metadata.mbid_mapping.recording_mbid ? `https://musicbrainz.org/recording/${data.data.payload.listens[0].track_metadata.mbid_mapping.recording_mbid}` : '#';
       const listenbrainzurl: string = data.data.payload.listens[0].track_metadata.mbid_mapping && data.data.payload.listens[0].track_metadata.mbid_mapping.recording_mbid ? `https://listenbrainz.org/player?recording_mbids=${data.data.payload.listens[0].track_metadata.mbid_mapping.recording_mbid}` : '#';
       return [title, img, artist, lastlisten, musicbrainzurl, listenbrainzurl];
+    }).catch((err) => {
+      return null;
     });
 };
 

@@ -65,24 +65,12 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
 
   useEffect(() => {
     const fetchData = async (LBUser: string) => {
-      try {
-        const data = await getLData(LBUser);
-        setLData(data);
-      } catch (error) {
-        console.error('Failed to fetch data:', error);
-        setLData(null);
-      }
+      const data = await getLData(LBUser);
+      setLData(data);
     };
 
-    if (account) {
-      const LBUser = account.listenbrainz;
-      if (LBUser) {
-        fetchData(LBUser);
-      } else {
-        setLData(null);
-      }
-    } else {
-      setLData(null);
+    if (account && account.listenbrainz) {
+      fetchData(account.listenbrainz);
     }
 
   }, [account]);
