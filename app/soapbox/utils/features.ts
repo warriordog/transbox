@@ -94,6 +94,12 @@ export const GLITCH = 'glitch';
 // NOTE: Rebased is named 'soapbox' for legacy reasons.
 export const REBASED = 'soapbox';
 
+/**
+ * Luzie, the recommended backend for Transbox.
+ * @see {@link https://github.com/transfem-org/luzie}
+ */
+export const LUZIE = 'luzie';
+
 /** Backend name reserved only for tests. */
 export const UNRELEASED = 'unreleased';
 
@@ -137,6 +143,7 @@ const getInstanceFeatures = (instance: Instance) => {
      */
     accountLocation: any([
       v.software === PLEROMA && v.build === REBASED && gte(v.version, '2.4.50'),
+      v.software === PLEROMA && v.build === LUZIE && gte(v.version, '2.4.50'),
       v.software === TRUTHSOCIAL,
     ]),
 
@@ -144,9 +151,7 @@ const getInstanceFeatures = (instance: Instance) => {
      * Ability to set one's listenbrainz on their profile.
      * @see PATCH /api/v1/accounts/update_credentials
      */
-    accountListenBrainz: any([
-      v.software === PLEROMA && v.build === REBASED && gte(v.version, '2.4.50')
-    ]),
+    accountListenBrainz: v.software === PLEROMA && v.build === LUZIE && gte(v.version, '2.4.50'),
 
     /**
      * Look up an account by the acct.
@@ -228,7 +233,10 @@ const getInstanceFeatures = (instance: Instance) => {
      * @see POST /api/v1/accounts
      * @see PATCH /api/v1/accounts/update_credentials
      */
-    birthdays: v.software === PLEROMA && v.build === REBASED && gte(v.version, '2.4.50'),
+    birthdays: any([
+      v.software === PLEROMA && v.build === REBASED && gte(v.version, '2.4.50'),
+      v.software === PLEROMA && v.build === LUZIE && gte(v.version, '2.4.50'),
+    ]),
 
     /** Whether people who blocked you are visible through the API. */
     blockersVisible: features.includes('blockers_visible'),
@@ -295,6 +303,7 @@ const getInstanceFeatures = (instance: Instance) => {
     chatsDelete: any([
       v.software === TRUTHSOCIAL,
       v.build === REBASED,
+      v.build === LUZIE,
     ]),
 
     /**
@@ -480,6 +489,7 @@ const getInstanceFeatures = (instance: Instance) => {
     familiarFollowers: any([
       v.software === MASTODON && gte(v.version, '3.5.0'),
       v.software === PLEROMA && gte(v.version, '2.5.51') && v.build === REBASED,
+      v.software === PLEROMA && gte(v.version, '2.5.51') && v.build === LUZIE,
       v.software === TAKAHE,
     ]),
 
@@ -671,6 +681,7 @@ const getInstanceFeatures = (instance: Instance) => {
     mastodonAdmin: any([
       v.software === MASTODON && gte(v.compatVersion, '2.9.1'),
       v.software === PLEROMA && v.build === REBASED && gte(v.version, '2.4.50'),
+      v.software === PLEROMA && v.build === LUZIE && gte(v.version, '2.4.50'),
     ]),
 
     /**
@@ -809,7 +820,7 @@ const getInstanceFeatures = (instance: Instance) => {
      */
     quotePosts: any([
       v.software === FRIENDICA && gte(v.version, '2023.3.0'),
-      v.software === PLEROMA && [REBASED, AKKOMA].includes(v.build!) && gte(v.version, '2.4.50'),
+      v.software === PLEROMA && [REBASED, AKKOMA, LUZIE].includes(v.build!) && gte(v.version, '2.4.50'),
       features.includes('quote_posting'),
       instance.feature_quote === true,
     ]),
@@ -827,6 +838,7 @@ const getInstanceFeatures = (instance: Instance) => {
     removeFromFollowers: any([
       v.software === MASTODON && gte(v.compatVersion, '3.5.0'),
       v.software === PLEROMA && v.build === REBASED && gte(v.version, '2.4.50'),
+      v.software === PLEROMA && v.build === LUZIE && gte(v.version, '2.4.50'),
     ]),
 
     /**
