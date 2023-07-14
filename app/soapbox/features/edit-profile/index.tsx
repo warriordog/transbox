@@ -119,6 +119,8 @@ interface AccountCredentials {
   website?: string
   /** User's location. */
   location?: string
+  /** User's listenbrainz. */
+  listenbrainz?: string
   /** User's birthday. */
   birthday?: string
 }
@@ -134,6 +136,7 @@ const accountToCredentials = (account: Account): AccountCredentials => {
     note: account.source?.note ?? '',
     locked: account.locked,
     fields_attributes: [...account.source?.fields ?? []],
+    listenbrainz: account.listenbrainz,
     stranger_notifications: account.pleroma?.notification_settings?.block_from_strangers === true,
     accepts_email_list: account.pleroma?.accepts_email_list === true,
     hide_followers: hideNetwork,
@@ -328,6 +331,19 @@ const EditProfile: React.FC = () => {
               value={data.location}
               onChange={handleTextChange('location')}
               placeholder={intl.formatMessage(messages.locationPlaceholder)}
+            />
+          </FormGroup>
+        )}
+
+        {features.accountListenBrainz && (
+          <FormGroup
+            labelText='ListenBrainz'
+          >
+            <Input
+              type='text'
+              value={data.listenbrainz}
+              onChange={handleTextChange('listenbrainz')}
+              placeholder='Listenbrainz Username'
             />
           </FormGroup>
         )}

@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { defineMessages, useIntl, FormattedMessage } from 'react-intl';
 
 import { usePatronUser } from 'soapbox/api/hooks';
@@ -11,6 +11,8 @@ import { useAppSelector, useSoapboxConfig } from 'soapbox/hooks';
 import { isLocal } from 'soapbox/utils/accounts';
 import { badgeToTag, getBadges as getAccountBadges } from 'soapbox/utils/badges';
 import { capitalize } from 'soapbox/utils/strings';
+import { getLData } from 'soapbox/utils/listenbrainz';
+import StillImage from 'soapbox/components/still-image';
 
 import ProfileFamiliarFollowers from './profile-familiar-followers';
 import ProfileField from './profile-field';
@@ -59,8 +61,47 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
     }
   };
 
+  const [ldata, setLData] = useState<string[] | null>(null);
+
+  useEffect(() => {
+    const fetchData = async (LBUser: string) => {
+      const data = await getLData(LBUser);
+      setLData(data);
+    };
+
+    if (account && account.listenbrainz) {
+      fetchData(account.listenbrainz);
+    }
+
+  }, [account]);
+
+  const getLB = (): React.ReactNode => {
+    if (ldata && ldata.length > 0) {
+      const current = Math.floor(new Date().getTime() / 1000);
+      const timeonlb = ldata[3] as unknown as number;
+      if ((current-timeonlb) / 60 < 6) {
+        return (
+        <a href={ldata ? ldata[4] : '#'}>
+        <div style={{backgroundColor: '#422035'}} className='relative'>
+          <HStack alignItems='center' space={0.5}>
+            <StillImage className='h-16' src={ldata ? ldata[1] : 'https://transfem.space/plugins/listenbrainz/images/cover-art-placeholder.png'} />
+            <Stack alignItems='start' className='absolute left-5' style={{paddingLeft:'3.2rem'}} space={0.5}>
+              <Text weight='bold' size='sm'>Now Playing: {ldata ? ldata[0] : ldata}</Text>
+              <Text size='xs' weight='medium'>{ldata ? ldata[2] : ldata}</Text>
+            </Stack>
+            <a href={ldata ? ldata[5] : '#'}>
+            <Stack className='absolute right-3' style={{bottom: '1.01rem'}}>
+              <Icon size={32} src={require('@tabler/icons/player-play-filled.svg')}/>
+            </Stack>
+            </a>
+          </HStack>
+        </div></a>);
+      };
+    };
+  };
+
   const getCustomBadges = (): React.ReactNode[] => {
-    const badges = account ? getAccountBadges(account) : [];
+    let badges = account ? getAccountBadges(account) : [];
 
     return badges.map(badge => (
       <Badge
@@ -176,6 +217,8 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
         {account.note.length > 0 && (
           <Markup size='sm' dangerouslySetInnerHTML={content} />
         )}
+
+        {badges.length > 0 && getLB()}
 
         <div className='flex flex-col items-start gap-2 md:flex-row md:flex-wrap md:items-center'>
           {isLocal(account) ? (

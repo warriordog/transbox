@@ -109,6 +109,7 @@ const Preferences = () => {
   const defaultPrivacyOptions = React.useMemo(() => ({
     public: intl.formatMessage(messages.privacy_public),
     unlisted: intl.formatMessage(messages.privacy_unlisted),
+    local: 'Local',
     private: intl.formatMessage(messages.privacy_followers_only),
   }), []);
 
