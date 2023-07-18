@@ -215,7 +215,7 @@ const ProfileInfoPanel: React.FC<IProfileInfoPanel> = ({ account, username }) =>
         <ProfileStats account={account} />
 
         {account.note.length > 0 && (
-          <Markup size='sm' dangerouslySetInnerHTML={content} />
+          <Markup size='sm' dangerouslySetInnerHTML={content} truncate />
         )}
 
         {badges.length > 0 && getLB()}
