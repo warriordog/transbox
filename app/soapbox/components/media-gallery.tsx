@@ -4,6 +4,7 @@ import React, { useState, useRef, useLayoutEffect } from 'react';
 import Blurhash from 'soapbox/components/blurhash';
 import Icon from 'soapbox/components/icon';
 import StillImage from 'soapbox/components/still-image';
+import { Icon as UiIcon } from 'soapbox/components/ui';
 import { MIMETYPE_ICONS } from 'soapbox/components/upload';
 import { useSettings, useSoapboxConfig } from 'soapbox/hooks';
 import { Attachment } from 'soapbox/types/entities';
@@ -120,7 +121,7 @@ const Item: React.FC<IItem> = ({
     video.currentTime = 0;
   };
 
-  let width: Dimensions['w'] = 100;
+  let width: Dimensions['w'] = '100%';
   let height: Dimensions['h'] = '100%';
   let top: Dimensions['t'] = 'auto';
   let left: Dimensions['l'] = 'auto';
@@ -142,6 +143,16 @@ const Item: React.FC<IItem> = ({
 
   let thumbnail: React.ReactNode = '';
 
+  const mediaDescription = attachment.description ?? undefined;
+  const noMediaWarning = !mediaDescription && (
+    <UiIcon
+      className='absolute bottom-1.5 left-1.5 z-10 text-[#e63d5d] drop-shadow-[0_0_1px_black]'
+      alt='Media lacks descriptive text'
+      size={32}
+      src={require('@tabler/icons/alert-circle-filled.svg')}
+    />
+  );
+
   if (attachment.type === 'unknown') {
     const filename = truncateFilename(attachment.url, MAX_FILENAME_LENGTH);
     const attachmentIcon = (
@@ -158,13 +169,14 @@ const Item: React.FC<IItem> = ({
           'rounded-md': total > 1,
         })}
         key={attachment.id}
-        style={{ position, float, left, top, right, bottom, height, width: `${width}%` }}
+        style={{ position, float, left, top, right, bottom, height, width }}
       >
         <a className='media-gallery__item-thumbnail' href={attachment.url} target='_blank' style={{ cursor: 'pointer' }}>
           <Blurhash hash={attachment.blurhash} className='media-gallery__preview' />
           <span className='media-gallery__item__icons'>{attachmentIcon}</span>
           <span className='media-gallery__filename__label'>{filename}</span>
         </a>
+        {noMediaWarning}
       </div>
     );
   } else if (attachment.type === 'image') {
@@ -180,7 +192,7 @@ const Item: React.FC<IItem> = ({
         <StillImage
           className='h-full w-full'
           src={mediaPreview ? attachment.preview_url : attachment.url}
-          alt={attachment.description}
+          alt={mediaDescription}
           letterboxed={letterboxed}
           showExt
         />
@@ -199,8 +211,8 @@ const Item: React.FC<IItem> = ({
       <div className={clsx('media-gallery__gifv', { autoplay: autoPlayGif })}>
         <video
           className='media-gallery__item-gifv-thumbnail'
-          aria-label={attachment.description}
-          title={attachment.description}
+          aria-label={mediaDescription}
+          title={mediaDescription}
           role='application'
           src={attachment.url}
           onClick={handleClick}
@@ -222,7 +234,7 @@ const Item: React.FC<IItem> = ({
         href={attachment.url}
         onClick={handleClick}
         target='_blank'
-        title={attachment.description}
+        title={mediaDescription}
       >
         <span className='media-gallery__item__icons'><Icon src={require('@tabler/icons/volume.svg')} /></span>
         <span className='media-gallery__file-extension__label'>{ext}</span>
@@ -236,7 +248,7 @@ const Item: React.FC<IItem> = ({
         href={attachment.url}
         onClick={handleClick}
         target='_blank'
-        title={attachment.description}
+        title={mediaDescription}
       >
         <video
           muted
@@ -258,7 +270,7 @@ const Item: React.FC<IItem> = ({
         'rounded-md': total > 1,
       })}
       key={attachment.id}
-      style={{ position, float, left, top, right, bottom, height, width: `${width}%` }}
+      style={{ position, float, left, top, right, bottom, height, width }}
     >
       {last && total > ATTACHMENT_LIMIT && (
         <div className='media-gallery__item-overflow'>
@@ -270,6 +282,7 @@ const Item: React.FC<IItem> = ({
         className='media-gallery__preview'
       />
       {visible && thumbnail}
+      {noMediaWarning}
     </div>
   );
 };
@@ -329,8 +342,13 @@ const MediaGallery: React.FC<IMediaGallery> = (props) => {
     const w = width || defaultWidth;
     const panoSize = Math.floor(w / maximumAspectRatio);
     const panoSize_px = `${Math.floor(w / maximumAspectRatio)}px`;
+    const w100 = 'calc(100% + 4px)'; // Expand to cover padding, explained below
 
-    const style: React.CSSProperties = {};
+    const style: React.CSSProperties = {
+      // Images get shifted out-of-box slightly, cropping 2px worth of pixels from the outer edge.
+      // We avoid that by reserving extra space so that the edge pixels end up in the padding, which is visible.
+      padding: '2px',
+    };
     let itemsDimensions: Dimensions[] = [];
 
     const ratios = Array(size).fill(null).map((_, i) =>
@@ -357,34 +375,34 @@ const MediaGallery: React.FC<IMediaGallery> = (props) => {
 
       if (isPortrait(ar1) && isPortrait(ar2)) {
         itemsDimensions = [
-          { w: 50, h: '100%', r: '2px' },
-          { w: 50, h: '100%', l: '2px' },
+          { w: '50%', h: '100%', r: '2px' },
+          { w: '50%', h: '100%', l: '2px' },
         ];
       } else if (isPanoramic(ar1) && isPanoramic(ar2)) {
         itemsDimensions = [
-          { w: 100, h: panoSize_px, b: '2px' },
-          { w: 100, h: panoSize_px, t: '2px' },
+          { w: w100, h: panoSize_px, b: '2px', r: '2px' },
+          { w: w100, h: panoSize_px, t: '2px', r: '2px' },
         ];
       } else if (
         (isPanoramic(ar1) && isPortrait(ar2)) ||
         (isPanoramic(ar1) && isNonConformingRatio(ar2))
       ) {
         itemsDimensions = [
-          { w: 100, h: `${(w / maximumAspectRatio)}px`, b: '2px' },
-          { w: 100, h: `${(w * 0.6)}px`, t: '2px' },
+          { w: w100, h: `${(w / maximumAspectRatio)}px`, b: '2px', r: '2px' },
+          { w: w100, h: `${(w * 0.6)}px`, t: '2px', r: '2px' },
         ];
       } else if (
         (isPortrait(ar1) && isPanoramic(ar2)) ||
         (isNonConformingRatio(ar1) && isPanoramic(ar2))
       ) {
         itemsDimensions = [
-          { w: 100, h: `${(w * 0.6)}px`, b: '2px' },
-          { w: 100, h: `${(w / maximumAspectRatio)}px`, t: '2px' },
+          { w: w100, h: `${(w * 0.6)}px`, b: '2px', r: '2px' },
+          { w: w100, h: `${(w / maximumAspectRatio)}px`, t: '2px', r: '2px' },
         ];
       } else {
         itemsDimensions = [
-          { w: 50, h: '100%', r: '2px' },
-          { w: 50, h: '100%', l: '2px' },
+          { w: '50%', h: '100%', r: '2px' },
+          { w: '50%', h: '100%', l: '2px' },
         ];
       }
     } else if (size === 3) {
@@ -398,60 +416,60 @@ const MediaGallery: React.FC<IMediaGallery> = (props) => {
 
       if (isPanoramic(ar1) && isNonConformingRatio(ar2) && isNonConformingRatio(ar3)) {
         itemsDimensions = [
-          { w: 100, h: '50%', b: '2px' },
-          { w: 50, h: '50%', t: '2px', r: '2px' },
-          { w: 50, h: '50%', t: '2px', l: '2px' },
+          { w: w100, h: '50%', b: '2px', r: '2px' },
+          { w: '50%', h: '50%', t: '2px', r: '2px' },
+          { w: '50%', h: '50%', t: '2px', l: '2px' },
         ];
       } else if (isPanoramic(ar1) && isPanoramic(ar2) && isPanoramic(ar3)) {
         itemsDimensions = [
-          { w: 100, h: panoSize_px, b: '4px' },
-          { w: 100, h: panoSize_px },
-          { w: 100, h: panoSize_px, t: '4px' },
+          { w: w100, h: panoSize_px, b: '4px', r: '2px' },
+          { w: w100, h: panoSize_px, r: '2px' },
+          { w: w100, h: panoSize_px, t: '4px', r: '2px' },
         ];
       } else if (isPortrait(ar1) && isNonConformingRatio(ar2) && isNonConformingRatio(ar3)) {
         itemsDimensions = [
-          { w: 50, h: '100%', r: '2px' },
-          { w: 50, h: '50%', b: '2px', l: '2px' },
-          { w: 50, h: '50%', t: '2px', l: '2px' },
+          { w: '50%', h: '100%', r: '2px' },
+          { w: '50%', h: '50%', b: '2px', l: '2px' },
+          { w: '50%', h: '50%', t: '2px', l: '2px' },
         ];
       } else if (isNonConformingRatio(ar1) && isNonConformingRatio(ar2) && isPortrait(ar3)) {
         itemsDimensions = [
-          { w: 50, h: '50%', b: '2px', r: '2px' },
-          { w: 50, h: '50%', l: '-2px', b: '-2px', pos: 'absolute', float: 'none' },
-          { w: 50, h: '100%', r: '-2px', t: '0px', b: '0px', pos: 'absolute', float: 'none' },
+          { w: '50%', h: '50%', b: '2px', r: '2px' },
+          { w: '50%', h: '50%', l: '-2px', b: '-2px', pos: 'absolute', float: 'none' },
+          { w: '50%', h: '100%', r: '-2px', t: '0px', b: '0px', pos: 'absolute', float: 'none' },
         ];
       } else if (
         (isNonConformingRatio(ar1) && isPortrait(ar2) && isNonConformingRatio(ar3)) ||
         (isPortrait(ar1) && isPortrait(ar2) && isPortrait(ar3))
       ) {
         itemsDimensions = [
-          { w: 50, h: '50%', b: '2px', r: '2px' },
-          { w: 50, h: '100%', l: '2px', float: 'right' },
-          { w: 50, h: '50%', t: '2px', r: '2px' },
+          { w: '50%', h: '50%', b: '2px', r: '2px' },
+          { w: '50%', h: '100%', l: '2px', float: 'right' },
+          { w: '50%', h: '50%', t: '2px', r: '2px' },
         ];
       } else if (
         (isPanoramic(ar1) && isPanoramic(ar2) && isNonConformingRatio(ar3)) ||
         (isPanoramic(ar1) && isPanoramic(ar2) && isPortrait(ar3))
       ) {
         itemsDimensions = [
-          { w: 50, h: panoSize_px, b: '2px', r: '2px' },
-          { w: 50, h: panoSize_px, b: '2px', l: '2px' },
-          { w: 100, h: `${w - panoSize}px`, t: '2px' },
+          { w: '50%', h: panoSize_px, b: '2px', r: '2px' },
+          { w: '50%', h: panoSize_px, b: '2px', l: '2px' },
+          { w: w100, h: `${w - panoSize}px`, t: '2px', r: '2px' },
         ];
       } else if (
         (isNonConformingRatio(ar1) && isPanoramic(ar2) && isPanoramic(ar3)) ||
         (isPortrait(ar1) && isPanoramic(ar2) && isPanoramic(ar3))
       ) {
         itemsDimensions = [
-          { w: 100, h: `${w - panoSize}px`, b: '2px' },
-          { w: 50, h: panoSize_px, t: '2px', r: '2px' },
-          { w: 50, h: panoSize_px, t: '2px', l: '2px' },
+          { w: w100, h: `${w - panoSize}px`, b: '2px', r: '2px' },
+          { w: '50%', h: panoSize_px, t: '2px', r: '2px' },
+          { w: '50%', h: panoSize_px, t: '2px', l: '2px' },
         ];
       } else {
         itemsDimensions = [
-          { w: 50, h: '50%', b: '2px', r: '2px' },
-          { w: 50, h: '50%', b: '2px', l: '2px' },
-          { w: 100, h: '50%', t: '2px' },
+          { w: '50%', h: '50%', b: '2px', r: '2px' },
+          { w: '50%', h: '50%', b: '2px', l: '2px' },
+          { w: w100, h: '50%', t: '2px', r: '2px' },
         ];
       }
     } else if (size >= 4) {
@@ -476,34 +494,34 @@ const MediaGallery: React.FC<IMediaGallery> = (props) => {
 
       if (isPanoramic(ar1) && isPanoramic(ar2) && isNonConformingRatio(ar3) && isNonConformingRatio(ar4)) {
         itemsDimensions = [
-          { w: 50, h: panoSize_px, b: '2px', r: '2px' },
-          { w: 50, h: panoSize_px, b: '2px', l: '2px' },
-          { w: 50, h: `${(w / 2)}px`, t: '2px', r: '2px' },
-          { w: 50, h: `${(w / 2)}px`, t: '2px', l: '2px' },
+          { w: '50%', h: panoSize_px, b: '2px', r: '2px' },
+          { w: '50%', h: panoSize_px, b: '2px', l: '2px' },
+          { w: '50%', h: `${(w / 2)}px`, t: '2px', r: '2px' },
+          { w: '50%', h: `${(w / 2)}px`, t: '2px', l: '2px' },
         ];
       } else if (isNonConformingRatio(ar1) && isNonConformingRatio(ar2) && isPanoramic(ar3) && isPanoramic(ar4)) {
         itemsDimensions = [
-          { w: 50, h: `${(w / 2)}px`, b: '2px', r: '2px' },
-          { w: 50, h: `${(w / 2)}px`, b: '2px', l: '2px' },
-          { w: 50, h: panoSize_px, t: '2px', r: '2px' },
-          { w: 50, h: panoSize_px, t: '2px', l: '2px' },
+          { w: '50%', h: `${(w / 2)}px`, b: '2px', r: '2px' },
+          { w: '50%', h: `${(w / 2)}px`, b: '2px', l: '2px' },
+          { w: '50%', h: panoSize_px, t: '2px', r: '2px' },
+          { w: '50%', h: panoSize_px, t: '2px', l: '2px' },
         ];
       } else if (
         (isPortrait(ar1) && isNonConformingRatio(ar2) && isNonConformingRatio(ar3) && isNonConformingRatio(ar4)) ||
         (isPortrait(ar1) && isPanoramic(ar2) && isPanoramic(ar3) && isPanoramic(ar4))
       ) {
         itemsDimensions = [
-          { w: 67, h: '100%', r: '2px' },
-          { w: 33, h: '33%', b: '4px', l: '2px' },
-          { w: 33, h: '33%', l: '2px' },
-          { w: 33, h: '33%', t: '4px', l: '2px' },
+          { w: '67%', h: '100%', r: '2px' },
+          { w: '33%', h: '33%', b: '4px', l: '2px' },
+          { w: '33%', h: '33%', l: '2px' },
+          { w: '33%', h: '33%', t: '4px', l: '2px' },
         ];
       } else {
         itemsDimensions = [
-          { w: 50, h: '50%', b: '2px', r: '2px' },
-          { w: 50, h: '50%', b: '2px', l: '2px' },
-          { w: 50, h: '50%', t: '2px', r: '2px' },
-          { w: 50, h: '50%', t: '2px', l: '2px' },
+          { w: '50%', h: '50%', b: '2px', r: '2px' },
+          { w: '50%', h: '50%', b: '2px', l: '2px' },
+          { w: '50%', h: '50%', t: '2px', r: '2px' },
+          { w: '50%', h: '50%', t: '2px', l: '2px' },
         ];
       }
     }

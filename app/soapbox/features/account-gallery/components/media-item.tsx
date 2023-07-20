@@ -53,7 +53,8 @@ const MediaItem: React.FC<IMediaItem> = ({ attachment, onOpenMedia }) => {
   };
 
   const status = attachment.status;
-  const title  = status.spoiler_text || attachment.description;
+  const description = attachment.description ?? undefined;
+  const title  = status.spoiler_text || description;
 
   let thumbnail: React.ReactNode = '';
   let icon;
@@ -69,7 +70,7 @@ const MediaItem: React.FC<IMediaItem> = ({ attachment, onOpenMedia }) => {
     thumbnail = (
       <StillImage
         src={attachment.preview_url}
-        alt={attachment.description}
+        alt={description}
         style={{ objectPosition: `${x}% ${y}%` }}
         className='h-full w-full overflow-hidden rounded-lg'
       />
@@ -86,8 +87,8 @@ const MediaItem: React.FC<IMediaItem> = ({ attachment, onOpenMedia }) => {
       <div className={clsx('media-gallery__gifv', { autoplay: autoPlayGif })}>
         <video
           className='media-gallery__item-gifv-thumbnail'
-          aria-label={attachment.description}
-          title={attachment.description}
+          aria-label={description}
+          title={description}
           role='application'
           src={attachment.url}
           onMouseEnter={handleMouseEnter}

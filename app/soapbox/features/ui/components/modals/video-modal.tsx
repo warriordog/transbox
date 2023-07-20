@@ -30,6 +30,7 @@ const VideoModal: React.FC<IVideoModal> = ({ status, account, media, time, onClo
     </a>
   );
 
+  const description = media.description ?? undefined;
   return (
     <div className='pointer-events-auto mx-auto block w-full max-w-xl overflow-hidden rounded-2xl text-left align-middle shadow-xl transition-all'>
       <Video
@@ -40,7 +41,7 @@ const VideoModal: React.FC<IVideoModal> = ({ status, account, media, time, onClo
         link={link}
         detailed
         autoFocus
-        alt={media.description}
+        alt={description}
         visible
       />
     </div>

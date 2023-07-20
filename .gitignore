@@ -9,6 +9,7 @@
 /.vs/
 yarn-error.log*
 /junit.xml
+/.yarn/
 
 /static/
 /static-test/

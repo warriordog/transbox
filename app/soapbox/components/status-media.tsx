@@ -79,6 +79,7 @@ const StatusMedia: React.FC<IStatusMedia> = ({
       );
     } else if (size === 1 && firstAttachment.type === 'video') {
       const video = firstAttachment;
+      const videoDescription = video.description ?? undefined;
 
       if (video.external_video_id && status.card) {
         const getHeight = (): number => {
@@ -109,7 +110,7 @@ const StatusMedia: React.FC<IStatusMedia> = ({
                 preview={video.preview_url}
                 blurhash={video.blurhash}
                 src={video.url}
-                alt={video.description}
+                alt={videoDescription}
                 aspectRatio={Number(video.meta.getIn(['original', 'aspect']))}
                 height={285}
                 visible={showMedia}

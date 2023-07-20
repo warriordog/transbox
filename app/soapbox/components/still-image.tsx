@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 
 import { useSettings } from 'soapbox/hooks';
 
+
 export interface IStillImage {
   /** Image alt text. */
   alt?: string

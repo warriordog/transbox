@@ -14,7 +14,7 @@ import { mergeDefined } from 'soapbox/utils/normalizers';
 // https://docs.joinmastodon.org/entities/attachment/
 export const AttachmentRecord = ImmutableRecord({
   blurhash: undefined,
-  description: '',
+  description: '' as string | null | undefined,
   external_video_id: null as string | null, // TruthSocial
   id: '',
   meta: ImmutableMap(),

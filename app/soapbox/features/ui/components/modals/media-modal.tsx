@@ -124,6 +124,7 @@ const MediaModal: React.FC<IMediaModal> = (props) => {
   const content = media.map((attachment, i) => {
     const width  = (attachment.meta.getIn(['original', 'width']) || undefined) as number | undefined;
     const height = (attachment.meta.getIn(['original', 'height']) || undefined) as number | undefined;
+    const description = attachment.description ?? undefined;
 
     const link = (status && (
       <a href={status.url} onClick={handleStatusClick}>
@@ -138,7 +139,7 @@ const MediaModal: React.FC<IMediaModal> = (props) => {
           src={attachment.url}
           width={width}
           height={height}
-          alt={attachment.description}
+          alt={description}
           key={attachment.url}
           onClick={toggleNavigation}
         />
@@ -155,7 +156,7 @@ const MediaModal: React.FC<IMediaModal> = (props) => {
           detailed
           autoFocus={i === getIndex()}
           link={link}
-          alt={attachment.description}
+          alt={description}
           key={attachment.url}
           visible
         />
@@ -164,7 +165,7 @@ const MediaModal: React.FC<IMediaModal> = (props) => {
       return (
         <Audio
           src={attachment.url}
-          alt={attachment.description}
+          alt={description}
           poster={attachment.preview_url !== attachment.url ? attachment.preview_url : (status?.getIn(['account', 'avatar_static'])) as string | undefined}
           backgroundColor={attachment.meta.getIn(['colors', 'background']) as string | undefined}
           foregroundColor={attachment.meta.getIn(['colors', 'foreground']) as string | undefined}
@@ -182,7 +183,7 @@ const MediaModal: React.FC<IMediaModal> = (props) => {
           width={width}
           height={height}
           key={attachment.preview_url}
-          alt={attachment.description}
+          alt={description}
           onClick={toggleNavigation}
         />
       );
